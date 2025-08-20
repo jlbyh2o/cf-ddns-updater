@@ -23,6 +23,22 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Build for Linux ARM
+echo "Building for Linux ARM..."
+GOOS=linux GOARCH=arm go build -ldflags "-s -w" -o bin/cf-ddns-updater-linux-arm .
+if [ $? -ne 0 ]; then
+    echo "Failed to build for Linux ARM"
+    exit 1
+fi
+
+# Build for Linux ARM64
+echo "Building for Linux ARM64..."
+GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" -o bin/cf-ddns-updater-linux-arm64 .
+if [ $? -ne 0 ]; then
+    echo "Failed to build for Linux ARM64"
+    exit 1
+fi
+
 # Copy example config
 cp cf-ddns.conf.example bin/
 
@@ -31,10 +47,14 @@ echo "Build completed successfully!"
 echo "Binaries are available in the 'bin' directory:"
 echo "- cf-ddns-updater-windows-amd64.exe (Windows 64-bit)"
 echo "- cf-ddns-updater-linux-amd64 (Linux x86-64)"
+echo "- cf-ddns-updater-linux-arm (Linux ARM)"
+echo "- cf-ddns-updater-linux-arm64 (Linux ARM64)"
 echo "- cf-ddns.conf.example (Example configuration)"
 echo ""
 
-# Make the Linux binary executable
+# Make the Linux binaries executable
 chmod +x bin/cf-ddns-updater-linux-amd64
+chmod +x bin/cf-ddns-updater-linux-arm
+chmod +x bin/cf-ddns-updater-linux-arm64
 
-echo "Linux binary has been made executable."
+echo "Linux binaries have been made executable."

@@ -28,6 +28,21 @@ build:
 	@echo "Building $(APP_NAME)..."
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(GOFLAGS) $(LDFLAGS) -o $(BINARY) .
 
+# Build for all supported architectures
+.PHONY: build-all
+build-all:
+	@echo "Building $(APP_NAME) for all architectures..."
+	@mkdir -p bin
+	# Linux x86-64
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-linux-amd64 .
+	# Linux ARM
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-linux-arm .
+	# Linux ARM64
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-linux-arm64 .
+	# Windows x86-64
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-windows-amd64.exe .
+	@echo "All builds completed successfully!"
+
 # Clean build artifacts
 .PHONY: clean
 clean:
@@ -88,7 +103,8 @@ install-dev: build
 .PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  build      - Build the binary"
+	@echo "  build      - Build the binary for Linux x86-64"
+	@echo "  build-all  - Build for all supported architectures"
 	@echo "  install    - Install the application system-wide"
 	@echo "  install-dev- Install without systemd service"
 	@echo "  uninstall  - Remove the application"

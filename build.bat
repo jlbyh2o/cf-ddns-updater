@@ -26,6 +26,26 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+REM Build for Linux ARM
+echo Building for Linux ARM...
+set GOOS=linux
+set GOARCH=arm
+go build -ldflags "-s -w" -o bin/cf-ddns-updater-linux-arm .
+if %errorlevel% neq 0 (
+    echo Failed to build for Linux ARM
+    exit /b 1
+)
+
+REM Build for Linux ARM64
+echo Building for Linux ARM64...
+set GOOS=linux
+set GOARCH=arm64
+go build -ldflags "-s -w" -o bin/cf-ddns-updater-linux-arm64 .
+if %errorlevel% neq 0 (
+    echo Failed to build for Linux ARM64
+    exit /b 1
+)
+
 REM Copy example config
 copy cf-ddns.conf.example bin\
 
@@ -34,6 +54,8 @@ echo Build completed successfully!
 echo Binaries are available in the 'bin' directory:
 echo - cf-ddns-updater-windows-amd64.exe (Windows 64-bit)
 echo - cf-ddns-updater-linux-amd64 (Linux x86-64)
+echo - cf-ddns-updater-linux-arm (Linux ARM)
+echo - cf-ddns-updater-linux-arm64 (Linux ARM64)
 echo - cf-ddns.conf.example (Example configuration)
 echo.
 pause
