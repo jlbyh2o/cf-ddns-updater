@@ -1,0 +1,50 @@
+[Unit]
+Description=Cloudflare Dynamic DNS Updater
+Documentation=https://github.com/jlbyh2o/cf-ddns-updater
+After=network-online.target
+Wants=network-online.target
+Requires=network.target
+
+[Service]
+Type=simple
+User=cf-ddns
+Group=cf-ddns
+ExecStart=/usr/local/bin/cf-ddns-updater -config /etc/cf-ddns/cf-ddns.conf -verbose
+Restart=always
+RestartSec=30
+TimeoutStartSec=30
+TimeoutStopSec=30
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+PrivateDevices=true
+ProtectHostname=true
+ProtectClock=true
+ProtectKernelLogs=true
+ProtectProc=invisible
+ProcSubset=pid
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictAddressFamilies=AF_INET AF_INET6
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+SystemCallArchitectures=native
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cf-ddns-updater
+
+[Install]
+WantedBy=multi-user.target

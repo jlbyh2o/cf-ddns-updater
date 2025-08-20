@@ -1,0 +1,69 @@
+# Cloudflare DDNS Updater Configuration
+# This file uses TOML format which supports comments for better readability
+
+# Update interval in seconds
+# 0 = run once and exit (useful for cron jobs)
+# 300 = update every 5 minutes (recommended for dynamic IPs)
+# 3600 = update every hour (for stable connections)
+interval = 300
+
+# Enable verbose logging (true/false)
+# Set to true for detailed output, false for minimal logging
+verbose = true
+
+# Optional log file path
+# Uncomment and set path to log to file instead of stdout
+# log_file = "/var/log/cf-ddns-updater.log"
+
+# Cloudflare API configuration
+[cloudflare]
+# Your Cloudflare API token (preferred) or Global API Key
+# Get this from: https://dash.cloudflare.com/profile/api-tokens
+api_token = "your_cloudflare_api_token_here"
+
+# Alternative: Use email + api_key instead of api_token
+# email = "your_email@example.com"
+# api_key = "your_global_api_key_here"
+
+# Optional: Specify zone ID for faster API calls
+# If not provided, the zone will be auto-detected from domain name
+# zone_id = "your_zone_id_here"
+
+# Domain configurations
+# You can define multiple domains, each as a [[domains]] section
+
+[[domains]]
+# Domain name to update
+name = "example.com"
+
+# Record types to update: "A", "AAAA", or "both"
+# "A" = IPv4 only, "AAAA" = IPv6 only, "both" = IPv4 and IPv6
+record_types = "both"
+
+# TTL (Time To Live) in seconds
+# 1 = automatic, 300 = 5 minutes, 3600 = 1 hour
+ttl = 300
+
+# Cloudflare proxy status (true/false)
+# true = traffic goes through Cloudflare (orange cloud)
+# false = DNS only (gray cloud)
+proxied = false
+
+[[domains]]
+name = "subdomain.example.com" 
+proxied = true # Enable Cloudflare proxy
+record_types = "A" # IPv4 only
+ttl = 300 
+
+[[domains]]
+name = "ipv6.example.com" 
+proxied = false 
+record_types = "AAAA" # IPv6 only
+ttl = 300 
+
+# Additional domain example with custom settings
+[[domains]]
+name = "api.example.com" 
+proxied = true 
+record_types = "both" 
+ttl = 1 # Automatic TTL

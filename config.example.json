@@ -1,0 +1,28 @@
+{
+  "cloudflare": {
+    "api_token": "your_cloudflare_api_token_here",
+    "zone_id": "optional_zone_id_here"
+  },
+  "domains": [
+    {
+      "name": "example.com",
+      "record_types": "both",
+      "ttl": 300,
+      "proxied": false
+    },
+    {
+      "name": "subdomain.example.com",
+      "record_types": "A",
+      "ttl": 300,
+      "proxied": true
+    },
+    {
+      "name": "ipv6.example.com",
+      "record_types": "AAAA",
+      "ttl": 300,
+      "proxied": false
+    }
+  ],
+  "interval": 0,
+  "verbose": true
+}
