@@ -15,6 +15,14 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Build for Windows ARM64
+echo "Building for Windows ARM64..."
+GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -o bin/cf-ddns-updater-windows-arm64.exe .
+if [ $? -ne 0 ]; then
+    echo "Failed to build for Windows ARM64"
+    exit 1
+fi
+
 # Build for Linux x86-64
 echo "Building for Linux x86-64..."
 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o bin/cf-ddns-updater-linux-amd64 .
@@ -46,6 +54,7 @@ echo ""
 echo "Build completed successfully!"
 echo "Binaries are available in the 'bin' directory:"
 echo "- cf-ddns-updater-windows-amd64.exe (Windows 64-bit)"
+echo "- cf-ddns-updater-windows-arm64.exe (Windows ARM64)"
 echo "- cf-ddns-updater-linux-amd64 (Linux x86-64)"
 echo "- cf-ddns-updater-linux-arm (Linux ARM)"
 echo "- cf-ddns-updater-linux-arm64 (Linux ARM64)"

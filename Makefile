@@ -41,6 +41,8 @@ build-all:
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-linux-arm64 .
 	# Windows x86-64
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-windows-amd64.exe .
+	# Windows ARM64
+	CGO_ENABLED=0 GOOS=windows GOARCH=arm64 go build $(GOFLAGS) $(LDFLAGS) -o bin/$(BINARY)-windows-arm64.exe .
 	@echo "All builds completed successfully!"
 
 # Clean build artifacts

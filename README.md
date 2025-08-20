@@ -6,7 +6,7 @@ A reliable and configurable Dynamic DNS updater for Cloudflare written in Go. Th
 
 - **Reliable**: Uses multiple IP detection services for redundancy
 - **Configurable**: Support for A records, AAAA records, or both
-- **Cross-platform**: Builds for Linux (x86-64, ARM, ARM64) and Windows 64-bit
+- **Cross-platform**: Builds for Linux (x86-64, ARM, ARM64) and Windows (x86-64, ARM64)
 - **Flexible Authentication**: Supports both API tokens and API key/email combinations
 - **Continuous Mode**: Can run continuously with configurable intervals
 - **Comprehensive Logging**: Detailed logging with optional file output
@@ -190,7 +190,8 @@ chmod +x build.sh
 ```
 
 Built binaries will be available in the `bin/` directory:
-- `cf-ddns-updater-windows-amd64.exe` (Windows 64-bit)
+- `cf-ddns-updater-windows-amd64.exe` (Windows x86-64)
+- `cf-ddns-updater-windows-arm64.exe` (Windows ARM64)
 - `cf-ddns-updater-linux-amd64` (Linux x86-64)
 - `cf-ddns-updater-linux-arm` (Linux ARM)
 - `cf-ddns-updater-linux-arm64` (Linux ARM64)

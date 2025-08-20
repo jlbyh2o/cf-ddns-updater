@@ -10,9 +10,19 @@ REM Build for Windows 64-bit
 echo Building for Windows 64-bit...
 set GOOS=windows
 set GOARCH=amd64
-go build -ldflags "-s -w" -o bin/cf-ddns-updater-windows-amd64.exe .
+go build -ldflags "-s -w" -o bin\cf-ddns-updater-windows-amd64.exe .
 if %errorlevel% neq 0 (
     echo Failed to build for Windows 64-bit
+    exit /b 1
+)
+
+REM Build for Windows ARM64
+echo Building for Windows ARM64...
+set GOOS=windows
+set GOARCH=arm64
+go build -ldflags "-s -w" -o bin\cf-ddns-updater-windows-arm64.exe .
+if %errorlevel% neq 0 (
+    echo Failed to build for Windows ARM64
     exit /b 1
 )
 
@@ -53,6 +63,7 @@ echo.
 echo Build completed successfully!
 echo Binaries are available in the 'bin' directory:
 echo - cf-ddns-updater-windows-amd64.exe (Windows 64-bit)
+echo - cf-ddns-updater-windows-arm64.exe (Windows ARM64)
 echo - cf-ddns-updater-linux-amd64 (Linux x86-64)
 echo - cf-ddns-updater-linux-arm (Linux ARM)
 echo - cf-ddns-updater-linux-arm64 (Linux ARM64)
