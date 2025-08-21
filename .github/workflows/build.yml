@@ -10,6 +10,8 @@ on:
 
 permissions:
   contents: write
+  actions: read
+  id-token: write
 
 jobs:
   build:
@@ -57,7 +59,7 @@ jobs:
     
     - name: Release binaries
       if: github.event_name == 'release'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: |
           cf-ddns-updater-linux-amd64
@@ -65,5 +67,4 @@ jobs:
           cf-ddns-updater-linux-arm64
           cf-ddns-updater-windows-amd64.exe
           cf-ddns-updater-windows-arm64.exe
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
