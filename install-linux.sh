@@ -131,9 +131,14 @@ create_config_dir() {
     # Download example config if available
     local config_url="https://raw.githubusercontent.com/${REPO}/main/cf-ddns.conf.example"
     if command -v curl >/dev/null 2>&1; then
-        curl -L -o "${CONFIG_DIR}/cf-ddns.conf" "$config_url" 2>/dev/null || true
+        curl -L -o "${CONFIG_DIR}/cf-ddns.conf.example" "$config_url" 2>/dev/null || true
     elif command -v wget >/dev/null 2>&1; then
-        wget -O "${CONFIG_DIR}/cf-ddns.conf" "$config_url" 2>/dev/null || true
+        wget -O "${CONFIG_DIR}/cf-ddns.conf.example" "$config_url" 2>/dev/null || true
+    fi
+    
+    # Copy to main config if main config does not exist
+    if [[ ! -f "${CONFIG_DIR}/cf-ddns.conf" ]]; then
+        cp "${CONFIG_DIR}/cf-ddns.conf.example" "${CONFIG_DIR}/cf-ddns.conf"
     fi
     
     log_success "Configuration directory created"
