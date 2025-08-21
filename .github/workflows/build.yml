@@ -1,0 +1,65 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Build for Linux x86-64
+      run: |
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o cf-ddns-updater-linux-amd64
+    
+    - name: Build for Linux ARM
+      run: |
+        CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -o cf-ddns-updater-linux-arm
+    
+    - name: Build for Linux ARM64
+      run: |
+        CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o cf-ddns-updater-linux-arm64
+    
+    - name: Build for Windows x86-64
+      run: |
+        CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o cf-ddns-updater-windows-amd64.exe
+    
+    - name: Build for Windows ARM64
+      run: |
+        CGO_ENABLED=0 GOOS=windows GOARCH=arm64 go build -o cf-ddns-updater-windows-arm64.exe
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: cf-ddns-updater-binaries
+        path: |
+          cf-ddns-updater-linux-amd64
+          cf-ddns-updater-linux-arm
+          cf-ddns-updater-linux-arm64
+          cf-ddns-updater-windows-amd64.exe
+          cf-ddns-updater-windows-arm64.exe
+    
+    - name: Release binaries
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          cf-ddns-updater-linux-amd64
+          cf-ddns-updater-linux-arm
+          cf-ddns-updater-linux-arm64
+          cf-ddns-updater-windows-amd64.exe
+          cf-ddns-updater-windows-arm64.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
