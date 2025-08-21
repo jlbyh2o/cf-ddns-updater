@@ -131,9 +131,9 @@ create_config_dir() {
     # Download example config if available
     local config_url="https://raw.githubusercontent.com/${REPO}/main/cf-ddns.conf.example"
     if command -v curl >/dev/null 2>&1; then
-        curl -L -o "${CONFIG_DIR}/cf-ddns.conf.example" "$config_url" 2>/dev/null || true
+        curl -L -o "${CONFIG_DIR}/cf-ddns.conf" "$config_url" 2>/dev/null || true
     elif command -v wget >/dev/null 2>&1; then
-        wget -O "${CONFIG_DIR}/cf-ddns.conf.example" "$config_url" 2>/dev/null || true
+        wget -O "${CONFIG_DIR}/cf-ddns.conf" "$config_url" 2>/dev/null || true
     fi
     
     log_success "Configuration directory created"
@@ -251,11 +251,10 @@ main() {
     log_success "Cloudflare DDNS Updater installed successfully!"
     echo
     log_info "Next steps:"
-    echo "  1. Copy your configuration: cp ${CONFIG_DIR}/cf-ddns.conf.example ${CONFIG_DIR}/cf-ddns.conf"
-    echo "  2. Edit the configuration: nano ${CONFIG_DIR}/cf-ddns.conf"
-    echo "  3. Start the service: systemctl start cf-ddns-updater"
-    echo "  4. Check service status: systemctl status cf-ddns-updater"
-    echo "  5. View logs: journalctl -u cf-ddns-updater -f"
+    echo "  1. Edit the configuration: nano ${CONFIG_DIR}/cf-ddns.conf"
+    echo "  2. Start the service: systemctl start cf-ddns-updater"
+    echo "  3. Check service status: systemctl status cf-ddns-updater"
+    echo "  4. View logs: journalctl -u cf-ddns-updater -f"
     echo
     log_info "Manual usage: ${INSTALL_DIR}/${BINARY_NAME} -config ${CONFIG_DIR}/cf-ddns.conf"
 }
