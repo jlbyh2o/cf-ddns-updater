@@ -73,8 +73,8 @@ go test -v ./...
 Create a test configuration file:
 
 ```bash
-cp config.example.json config.test.json
-# Edit config.test.json with your test Cloudflare credentials
+cp cf-ddns.conf.example cf-ddns.conf.test
+# Edit cf-ddns.conf.test with your test Cloudflare credentials
 ```
 
 **⚠️ Important**: Never commit real API tokens or credentials!
@@ -346,7 +346,7 @@ cd cf-ddns-updater
 
 # 2. Set up development environment
 go mod download
-cp config.example.json config.test.json
+cp cf-ddns.conf.example cf-ddns.conf.test
 
 # 3. Create a feature branch
 git checkout -b feature/your-feature-name

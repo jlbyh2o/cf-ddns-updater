@@ -24,8 +24,9 @@ go.work
 !*.conf.example
 # Configuration files are already covered by *.conf pattern above
 # Keeping this for any legacy JSON configs that might exist
-config.json
-!config.example.json
+cf-ddns.conf
+cf-ddns.conf.test
+!cf-ddns.conf.example
 
 # Log files
 *.log

@@ -72,8 +72,8 @@ We follow responsible disclosure practices:
 **📁 File Permissions:**
 ```bash
 # Recommended file permissions
-sudo chmod 600 /etc/cf-ddns-updater/config.json
-sudo chown cf-ddns:cf-ddns /etc/cf-ddns-updater/config.json
+sudo chmod 600 /etc/cf-ddns-updater/cf-ddns.conf
+sudo chown cf-ddns:cf-ddns /etc/cf-ddns-updater/cf-ddns.conf
 ```
 
 ### For Developers

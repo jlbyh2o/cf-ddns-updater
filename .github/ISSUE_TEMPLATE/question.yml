@@ -226,7 +226,7 @@ body:
         ### 📚 Helpful Resources
         
         - **Documentation**: [README.md](../../README.md)
-        - **Examples**: [Configuration Examples](../../config.example.json)
+        - **Examples**: [Configuration Examples](../../cf-ddns.conf.example)
         - **Discussions**: [GitHub Discussions](../discussions)
         - **Issues**: [Existing Issues](../issues)
         
