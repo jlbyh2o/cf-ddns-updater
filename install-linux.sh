@@ -139,6 +139,26 @@ create_config_dir() {
     log_success "Configuration directory created"
 }
 
+# Create system user for the service
+create_user() {
+    log_info "Creating cf-ddns system user"
+    
+    # Check if user already exists
+    if id "cf-ddns" &>/dev/null; then
+        log_info "User cf-ddns already exists"
+    else
+        # Create system user and group
+        useradd --system --no-create-home --shell /bin/false cf-ddns
+        log_success "Created cf-ddns system user"
+    fi
+    
+    # Set ownership of config directory
+    chown -R cf-ddns:cf-ddns "$CONFIG_DIR"
+    chmod 750 "$CONFIG_DIR"
+    
+    log_success "User and permissions configured"
+}
+
 # Install systemd service
 install_service() {
     log_info "Installing systemd service"
@@ -220,6 +240,9 @@ main() {
     
     # Create config directory
     create_config_dir
+    
+    # Create system user
+    create_user
     
     # Install systemd service
     install_service

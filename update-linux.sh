@@ -209,6 +209,22 @@ install_binary() {
     log_success "Binary installed successfully"
 }
 
+# Create system user if it doesn't exist
+ensure_user_exists() {
+    if ! id "cf-ddns" &>/dev/null; then
+        log_info "Creating cf-ddns system user (required for service)"
+        useradd --system --no-create-home --shell /bin/false cf-ddns
+        log_success "Created cf-ddns system user"
+        
+        # Set ownership of config directory
+        if [[ -d "$CONFIG_DIR" ]]; then
+            chown -R cf-ddns:cf-ddns "$CONFIG_DIR"
+            chmod 750 "$CONFIG_DIR"
+            log_info "Updated config directory ownership"
+        fi
+    fi
+}
+
 # Check for configuration migration needs
 check_config_migration() {
     local old_json_config="${CONFIG_DIR}/config.json"
@@ -302,6 +318,9 @@ main() {
     
     # Install new binary
     install_binary "$temp_file"
+    
+    # Ensure cf-ddns user exists (for older installations)
+    ensure_user_exists
     
     # Check for configuration migration needs
     if ! check_config_migration; then

@@ -107,7 +107,7 @@ remove_config() {
     fi
 }
 
-# Remove user account
+# Remove user account and group
 remove_user() {
     if id "$USER_NAME" &>/dev/null; then
         log_info "Removing user account: $USER_NAME"
@@ -115,6 +115,15 @@ remove_user() {
         log_success "User account removed"
     else
         log_info "User account not found: $USER_NAME"
+    fi
+    
+    # Remove group if it exists
+    if getent group "$USER_NAME" &>/dev/null; then
+        log_info "Removing group: $USER_NAME"
+        groupdel "$USER_NAME" 2>/dev/null || log_warning "Failed to remove group $USER_NAME"
+        log_success "Group removed"
+    else
+        log_info "Group not found: $USER_NAME"
     fi
 }
 
