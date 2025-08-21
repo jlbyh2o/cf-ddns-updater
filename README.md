@@ -4,7 +4,7 @@ A reliable and configurable Dynamic DNS updater for Cloudflare written in Go. Th
 
 ## Features
 
-- **Reliable**: Uses multiple IP detection services for redundancy
+- **Reliable**: Uses multiple IP detection services for redundancy, with fetch-ip.com as the default
 - **Configurable**: Support for A records, AAAA records, or both
 - **Cross-platform**: Builds for Linux (x86-64, ARM, ARM64) and Windows (x86-64, ARM64)
 - **Flexible Authentication**: Supports both API tokens and API key/email combinations
@@ -390,7 +390,7 @@ ENTRYPOINT ["/cf-ddns-updater", "-config", "/cf-ddns.conf"]
 2. **IP Detection Failures**
    - Check internet connectivity
    - Verify firewall settings
-   - The tool tries multiple services for redundancy
+   - The tool tries multiple services for redundancy (fetch-ip.com, icanhazip.com, ipify.org, ident.me)
 
 3. **DNS Update Failures**
    - Verify domain ownership in Cloudflare

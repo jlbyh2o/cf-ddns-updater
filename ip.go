@@ -42,41 +42,43 @@ func NewIPDetector() *IPDetector {
 
 // GetIPv4 retrieves the current public IPv4 address
 func (d *IPDetector) GetIPv4() (string, error) {
-	// Try multiple services for reliability
+	// Try multiple services for reliability, with fetch-ip.com as default
 	services := []string{
+		"https://v4.fetch-ip.com",
 		"https://ipv4.icanhazip.com",
 		"https://api.ipify.org",
 		"https://ipv4.ident.me",
 		"https://v4.ident.me",
 	}
-	
+
 	for _, service := range services {
 		ip, err := d.getIPFromService(service)
 		if err == nil && isValidIPv4(ip) {
 			return ip, nil
 		}
 	}
-	
+
 	return "", fmt.Errorf("failed to get IPv4 address from all services")
 }
 
 // GetIPv6 retrieves the current public IPv6 address
 func (d *IPDetector) GetIPv6() (string, error) {
-	// Try multiple services for reliability
+	// Try multiple services for reliability, with fetch-ip.com as default
 	services := []string{
+		"https://v6.fetch-ip.com",
 		"https://ipv6.icanhazip.com",
 		"https://api6.ipify.org",
 		"https://ipv6.ident.me",
 		"https://v6.ident.me",
 	}
-	
+
 	for _, service := range services {
 		ip, err := d.getIPFromService(service)
 		if err == nil && isValidIPv6(ip) {
 			return ip, nil
 		}
 	}
-	
+
 	return "", fmt.Errorf("failed to get IPv6 address from all services")
 }
 
@@ -87,16 +89,16 @@ func (d *IPDetector) getIPFromService(url string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
-	
+
 	if resp.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("HTTP %d from %s", resp.StatusCode, url)
 	}
-	
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
-	
+
 	ip := strings.TrimSpace(string(body))
 	return ip, nil
 }
@@ -107,12 +109,12 @@ func isValidIPv4(ip string) bool {
 	if len(parts) != 4 {
 		return false
 	}
-	
+
 	for _, part := range parts {
 		if len(part) == 0 || len(part) > 3 {
 			return false
 		}
-		
+
 		num := 0
 		for _, char := range part {
 			if char < '0' || char > '9' {
@@ -120,12 +122,12 @@ func isValidIPv4(ip string) bool {
 			}
 			num = num*10 + int(char-'0')
 		}
-		
+
 		if num > 255 {
 			return false
 		}
 	}
-	
+
 	return true
 }
 
@@ -135,25 +137,25 @@ func isValidIPv6(ip string) bool {
 	if !strings.Contains(ip, ":") {
 		return false
 	}
-	
+
 	// Split by colons
 	parts := strings.Split(ip, ":")
 	if len(parts) < 3 || len(parts) > 8 {
 		return false
 	}
-	
+
 	// Check for valid hex characters
 	for _, part := range parts {
 		if len(part) > 4 {
 			return false
 		}
-		
+
 		for _, char := range part {
 			if !((char >= '0' && char <= '9') || (char >= 'a' && char <= 'f') || (char >= 'A' && char <= 'F')) {
 				return false
 			}
 		}
 	}
-	
+
 	return true
 }
