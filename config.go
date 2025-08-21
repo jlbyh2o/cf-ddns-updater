@@ -29,16 +29,16 @@ import (
 type Config struct {
 	// Cloudflare API credentials
 	Cloudflare CloudflareConfig `toml:"cloudflare"`
-	
+
 	// Domains to update
 	Domains []DomainConfig `toml:"domains"`
-	
+
 	// Update interval in seconds (0 = run once)
 	Interval int `toml:"interval,omitempty"`
-	
+
 	// Logging configuration
 	Verbose bool `toml:"verbose,omitempty"`
-	
+
 	// Optional log file path
 	LogFile string `toml:"log_file,omitempty"`
 }
@@ -49,7 +49,7 @@ type CloudflareConfig struct {
 	APIToken string `toml:"api_token,omitempty"`
 	APIKey   string `toml:"api_key,omitempty"`
 	Email    string `toml:"email,omitempty"`
-	
+
 	// Zone ID (optional, will be auto-detected if not provided)
 	ZoneID string `toml:"zone_id,omitempty"`
 }
@@ -58,13 +58,13 @@ type CloudflareConfig struct {
 type DomainConfig struct {
 	// Domain name (e.g., "example.com" or "subdomain.example.com")
 	Name string `toml:"name"`
-	
+
 	// Record types to update: "A", "AAAA", or "both"
 	RecordTypes string `toml:"record_types"`
-	
+
 	// TTL for DNS records (default: 300)
 	TTL int `toml:"ttl,omitempty"`
-	
+
 	// Proxied through Cloudflare (default: false)
 	Proxied bool `toml:"proxied,omitempty"`
 }
@@ -75,34 +75,34 @@ func (c *Config) Validate() error {
 	if c.Cloudflare.APIToken == "" && (c.Cloudflare.APIKey == "" || c.Cloudflare.Email == "") {
 		return fmt.Errorf("either api_token or both api_key and email must be provided")
 	}
-	
+
 	// Validate domains
 	if len(c.Domains) == 0 {
 		return fmt.Errorf("at least one domain must be configured")
 	}
-	
+
 	for i, domain := range c.Domains {
 		if domain.Name == "" {
 			return fmt.Errorf("domain[%d]: name is required", i)
 		}
-		
+
 		// Validate record types
 		recordTypes := strings.ToLower(domain.RecordTypes)
 		if recordTypes == "" {
 			recordTypes = "both" // default
 			c.Domains[i].RecordTypes = "both"
 		}
-		
+
 		if recordTypes != "a" && recordTypes != "aaaa" && recordTypes != "both" {
 			return fmt.Errorf("domain[%d]: record_types must be 'A', 'AAAA', or 'both'", i)
 		}
-		
+
 		// Set default TTL
 		if domain.TTL == 0 {
 			c.Domains[i].TTL = 300
 		}
 	}
-	
+
 	return nil
 }
 
@@ -121,11 +121,11 @@ func (d *DomainConfig) ShouldUpdateAAAA() bool {
 // LoadConfigFromFile loads configuration from TOML file
 func LoadConfigFromFile(filename string) (*Config, error) {
 	var config Config
-	
+
 	_, err := toml.DecodeFile(filename, &config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse config file: %v", err)
 	}
-	
+
 	return &config, config.Validate()
 }
