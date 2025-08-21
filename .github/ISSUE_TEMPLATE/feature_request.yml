@@ -1,0 +1,303 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Pre-submission Checklist
+      description: Please confirm the following before submitting your feature request
+      options:
+        - label: I have searched existing issues to ensure this feature hasn't been requested already
+          required: true
+        - label: I have read the [Contributing Guidelines](../../CONTRIBUTING.md)
+          required: true
+        - label: I have checked the [project roadmap](../../README.md) to see if this is already planned
+          required: false
+
+  - type: textarea
+    id: feature-summary
+    attributes:
+      label: Feature Summary
+      description: A clear and concise description of the feature you'd like to see
+      placeholder: Briefly describe the feature...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What use case does it address?
+      placeholder: |
+        I'm always frustrated when...
+        It would be helpful if...
+        Currently, there's no way to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented
+      placeholder: |
+        I would like to see...
+        The feature should work by...
+        Users would be able to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative-solutions
+    attributes:
+      label: Alternative Solutions
+      description: Describe any alternative solutions or features you've considered
+      placeholder: |
+        Alternative approach 1: ...
+        Alternative approach 2: ...
+        I also considered...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: Feature Category
+      description: What category does this feature fall into?
+      options:
+        - Core Functionality
+        - Configuration
+        - API Integration
+        - User Interface
+        - Performance
+        - Security
+        - Monitoring/Logging
+        - Installation/Deployment
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be helpful
+        - High - Important for my use case
+        - Critical - Blocking my usage
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Estimated Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple - Minor change or addition
+        - Medium - Moderate development effort
+        - Complex - Significant development effort
+        - Major - Large architectural changes
+        - Unknown - Not sure about complexity
+    validations:
+      required: false
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Describe specific use cases where this feature would be beneficial
+      placeholder: |
+        Use case 1: As a home user, I want to...
+        Use case 2: As a system administrator, I need to...
+        Use case 3: When managing multiple domains, it would help to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-stories
+    attributes:
+      label: User Stories
+      description: Write user stories in the format "As a [user type], I want [goal] so that [benefit]"
+      placeholder: |
+        As a [user type], I want [goal] so that [benefit]
+        As a [user type], I want [goal] so that [benefit]
+      value: |
+        As a , I want  so that 
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What criteria must be met for this feature to be considered complete?
+      placeholder: |
+        - [ ] Feature does X when Y happens
+        - [ ] Configuration option Z is available
+        - [ ] Error handling for edge case A
+        - [ ] Documentation is updated
+        - [ ] Tests are included
+    validations:
+      required: false
+
+  - type: textarea
+    id: technical-considerations
+    attributes:
+      label: Technical Considerations
+      description: Any technical aspects, constraints, or requirements to consider?
+      placeholder: |
+        - API compatibility requirements
+        - Performance considerations
+        - Security implications
+        - Backward compatibility
+        - Dependencies or external services
+    validations:
+      required: false
+
+  - type: textarea
+    id: configuration-example
+    attributes:
+      label: Configuration Example
+      description: If this feature requires configuration, provide an example
+      placeholder: |
+        {
+          "new_feature": {
+            "enabled": true,
+            "option1": "value1",
+            "option2": 300
+          }
+        }
+      render: json
+    validations:
+      required: false
+
+  - type: textarea
+    id: api-example
+    attributes:
+      label: API Usage Example
+      description: If this affects the API or command-line usage, provide examples
+      placeholder: |
+        # Command line usage
+        cf-ddns-updater --new-feature --option value
+        
+        # API endpoint
+        GET /api/v1/new-feature
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: related-features
+    attributes:
+      label: Related Features
+      description: Are there any existing features this would interact with?
+      options:
+        - label: DNS record management
+        - label: IP detection
+        - label: Configuration system
+        - label: Logging and monitoring
+        - label: API integration
+        - label: Scheduling/timing
+        - label: Error handling
+        - label: Security features
+
+  - type: textarea
+    id: mockups-wireframes
+    attributes:
+      label: Mockups or Wireframes
+      description: If applicable, provide mockups, wireframes, or visual examples
+      placeholder: |
+        [Attach images or provide links to mockups]
+        
+        ASCII art examples:
+        ```
+        ┌─────────────────────┐
+        │ New Feature UI      │
+        │ ┌─────────────────┐ │
+        │ │ Option 1: [___] │ │
+        │ │ Option 2: [___] │ │
+        │ └─────────────────┘ │
+        └─────────────────────┘
+        ```
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples about the feature request
+      placeholder: |
+        - Links to similar features in other projects
+        - Screenshots of current behavior
+        - References to documentation or specifications
+        - Community discussions or feedback
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution-willingness
+    attributes:
+      label: Contribution
+      description: Are you willing to contribute to implementing this feature?
+      options:
+        - label: I'm willing to implement this feature myself
+        - label: I can help with testing the feature
+        - label: I can help with documentation
+        - label: I can provide feedback during development
+        - label: I'm not able to contribute code but can provide requirements
+
+  - type: dropdown
+    id: breaking-changes
+    attributes:
+      label: Breaking Changes
+      description: Would this feature require breaking changes to existing functionality?
+      options:
+        - "No - Fully backward compatible"
+        - "Minor - Small configuration changes needed"
+        - "Major - Significant changes to existing behavior"
+        - "Unknown - Not sure about compatibility impact"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ### 💡 Tips for Great Feature Requests
+        
+        - **Be specific**: Detailed descriptions help us understand your needs
+        - **Explain the why**: Help us understand the problem you're solving
+        - **Consider alternatives**: Show you've thought through different approaches
+        - **Think about edge cases**: What could go wrong or be confusing?
+        - **Consider other users**: How might this affect different use cases?
+        
+        ### 🚀 What Happens Next?
+        
+        1. **Triage**: We'll review and label your request
+        2. **Discussion**: Community feedback and technical discussion
+        3. **Planning**: If approved, we'll plan implementation
+        4. **Development**: Implementation by maintainers or contributors
+        5. **Testing**: Community testing and feedback
+        6. **Release**: Feature included in a future release
+        
+        ### 📞 Need Help?
+        
+        - Check our [documentation](../../README.md)
+        - Browse [existing features](../issues?q=label%3Aenhancement)
+        - Join [GitHub Discussions](../discussions)
+        
+        Thank you for helping improve cf-ddns-updater! 🎉

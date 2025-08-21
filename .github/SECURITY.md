@@ -144,7 +144,7 @@ We appreciate the security research community and will acknowledge researchers w
 
 ---
 
-**Last Updated**: January 2025  
-**Next Review**: July 2025
+**Last Updated**: August 2025  
+**Next Review**: January 2026
 
 > 🔒 **Remember**: When in doubt, report it! We'd rather investigate a false positive than miss a real security issue.

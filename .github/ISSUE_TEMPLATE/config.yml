@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/jlbyh2o/cf-ddns-updater/discussions
+    about: Ask questions, share ideas, and discuss with the community
+  - name: 🔒 Security Advisory
+    url: https://github.com/jlbyh2o/cf-ddns-updater/security/advisories/new
+    about: Report security vulnerabilities privately
+  - name: 📖 Documentation
+    url: https://github.com/jlbyh2o/cf-ddns-updater/blob/main/README.md
+    about: Read the project documentation and setup guides
+  - name: 🤝 Contributing Guide
+    url: https://github.com/jlbyh2o/cf-ddns-updater/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to the project

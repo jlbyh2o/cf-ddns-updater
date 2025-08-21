@@ -1,0 +1,253 @@
+name: ❓ Question
+description: Ask a question or get help with usage
+title: "[Question]: "
+labels: ["question", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out! We're here to help answer your questions about cf-ddns-updater.
+        
+        **💡 Before asking**: Please check our [documentation](../../README.md) and [existing discussions](../discussions) first.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Pre-submission Checklist
+      description: Please confirm the following before asking your question
+      options:
+        - label: I have read the [README documentation](../../README.md)
+          required: true
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: This is not a bug report (use the bug report template instead)
+          required: true
+
+  - type: dropdown
+    id: question-category
+    attributes:
+      label: Question Category
+      description: What category does your question fall into?
+      options:
+        - Installation and Setup
+        - Configuration
+        - Usage and Features
+        - Troubleshooting
+        - API and Integration
+        - Performance and Optimization
+        - Security
+        - Development and Contributing
+        - General
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Please describe your question in detail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and Background
+      description: Provide context about what you're trying to achieve
+      placeholder: |
+        I'm trying to...
+        My goal is to...
+        I want to understand...
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-situation
+    attributes:
+      label: Current Situation
+      description: Describe your current setup or what you've tried so far
+      placeholder: |
+        Currently I have...
+        I've tried...
+        My setup includes...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      options:
+        - Linux (Ubuntu/Debian)
+        - Linux (CentOS/RHEL/Fedora)
+        - Linux (Arch)
+        - Linux (Other)
+        - Windows 10
+        - Windows 11
+        - Windows Server
+        - macOS
+        - Other
+        - Not applicable
+    validations:
+      required: false
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Application Version
+      description: What version of cf-ddns-updater are you using? (if applicable)
+      placeholder: "v0.1.0 or 'latest' or 'not installed yet'"
+    validations:
+      required: false
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Configuration (if relevant)
+      description: Share your configuration if it's relevant to your question (remove sensitive information)
+      placeholder: |
+        {
+          "cloudflare": {
+            "api_token": "[REDACTED]",
+            "zone_id": "[REDACTED]"
+          },
+          "domains": [
+            {
+              "name": "example.com",
+              "type": "A"
+            }
+          ],
+          "interval": 300
+        }
+      render: json
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected-outcome
+    attributes:
+      label: Expected Outcome
+      description: What outcome are you hoping to achieve?
+      placeholder: |
+        I expect to be able to...
+        The ideal solution would...
+        I'm hoping to understand...
+    validations:
+      required: false
+
+  - type: textarea
+    id: research-done
+    attributes:
+      label: Research Done
+      description: What research or documentation have you already reviewed?
+      placeholder: |
+        I've read:
+        - README.md
+        - Configuration examples
+        - Issue #123
+        - Stack Overflow post about...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: question-type
+    attributes:
+      label: Question Type
+      description: What type of help are you looking for?
+      options:
+        - label: How-to guidance
+        - label: Best practices recommendation
+        - label: Clarification on documentation
+        - label: Feature explanation
+        - label: Configuration help
+        - label: Troubleshooting guidance
+        - label: Integration advice
+        - label: Performance optimization
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency Level
+      description: How urgent is this question for you?
+      options:
+        - Low - Just curious
+        - Medium - Would help with my project
+        - High - Blocking my implementation
+        - Critical - Production issue
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other information that might be helpful
+      placeholder: |
+        - Error messages (if any)
+        - Screenshots
+        - Log output
+        - Network setup details
+        - Related tools or services
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: help-others
+    attributes:
+      label: Community Contribution
+      description: How can you help others with similar questions?
+      options:
+        - label: I'm willing to help improve documentation based on the answer
+        - label: I can share my solution once I figure it out
+        - label: I can help test solutions
+        - label: I can contribute to FAQ or troubleshooting guides
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ### 🔍 Getting Better Help
+        
+        **For faster responses:**
+        - Be specific about what you're trying to achieve
+        - Include relevant configuration (without sensitive data)
+        - Mention what you've already tried
+        - Provide context about your environment
+        
+        **For complex questions:**
+        - Break down your question into smaller parts
+        - Provide step-by-step details
+        - Include examples or use cases
+        
+        ### 📚 Helpful Resources
+        
+        - **Documentation**: [README.md](../../README.md)
+        - **Examples**: [Configuration Examples](../../config.example.json)
+        - **Discussions**: [GitHub Discussions](../discussions)
+        - **Issues**: [Existing Issues](../issues)
+        
+        ### 🤝 Community Guidelines
+        
+        - Be respectful and patient
+        - Search before asking
+        - Provide clear, detailed questions
+        - Help others when you can
+        - Share solutions you discover
+        
+        ### 🔒 Security Note
+        
+        **Never share sensitive information** such as:
+        - API tokens or keys
+        - Passwords
+        - Personal domain names (if privacy is a concern)
+        - Production IP addresses
+        
+        For security-related questions, consider using [GitHub Security Advisories](../security/advisories/new).
+        
+        ---
+        
+        Thank you for being part of the cf-ddns-updater community! 🎉
