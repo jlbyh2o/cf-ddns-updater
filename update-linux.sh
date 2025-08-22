@@ -144,6 +144,7 @@ download_binary() {
 create_backup() {
     log_info "Creating backup at $BACKUP_DIR"
     mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR/config"
     
     # Backup binary
     if [[ -f "${INSTALL_DIR}/${BINARY_NAME}" ]]; then
@@ -151,9 +152,9 @@ create_backup() {
         log_info "Binary backed up"
     fi
     
-    # Backup configuration
+    # Backup configuration files (not the entire directory)
     if [[ -d "$CONFIG_DIR" ]]; then
-        cp -r "$CONFIG_DIR" "$BACKUP_DIR/"
+        cp "$CONFIG_DIR"/* "$BACKUP_DIR/config/" 2>/dev/null || true
         log_info "Configuration backed up"
     fi
     
@@ -323,6 +324,13 @@ rollback() {
         if [[ -f "$BACKUP_DIR/$BINARY_NAME" ]]; then
             cp "$BACKUP_DIR/$BINARY_NAME" "${INSTALL_DIR}/"
             log_info "Binary restored from backup"
+        fi
+        
+        # Restore configuration files
+        if [[ -d "$BACKUP_DIR/config" ]]; then
+            mkdir -p "$CONFIG_DIR"
+            cp "$BACKUP_DIR/config"/* "$CONFIG_DIR/" 2>/dev/null || true
+            log_info "Configuration restored from backup"
         fi
         
         # Restore service file
