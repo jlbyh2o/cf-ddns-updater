@@ -51,19 +51,25 @@ func main() {
 
 	fmt.Printf("%s v%s\n", AppName, Version)
 
-	// Setup logging
-	if err := setupLogging(*verbose, *logFile); err != nil {
-		log.Fatalf("Failed to setup logging: %v", err)
-	}
-
-	// Load configuration
+	// Load configuration first to get log file setting
 	config, err := loadConfig(*configFile)
 	if err != nil {
 		log.Fatalf("Failed to load configuration: %v", err)
 	}
 
+	// Determine log file: command line flag takes precedence over config file
+	logFileToUse := *logFile
+	if logFileToUse == "" && config.LogFile != "" {
+		logFileToUse = config.LogFile
+	}
+
+	// Setup logging
+	if err := setupLogging(*verbose, logFileToUse); err != nil {
+		log.Fatalf("Failed to setup logging: %v", err)
+	}
+
 	// Initialize updater
-	updater := NewDDNSUpdater(config)
+	updater := NewDDNSUpdater(config, *verbose)
 
 	// Run update loop
 	if *runOnce || config.Interval <= 0 {

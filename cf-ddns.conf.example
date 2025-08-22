@@ -13,7 +13,7 @@ verbose = true
 
 # Optional log file path
 # Uncomment and set path to log to file instead of stdout
-# log_file = "/var/log/cf-ddns-updater.log"
+# log_file = "/var/log/cf-ddns-updater/cf-ddns-updater.log"
 
 # Cloudflare API configuration
 [cloudflare]
@@ -49,21 +49,24 @@ ttl = 300
 # false = DNS only (gray cloud)
 proxied = false
 
-[[domains]]
-name = "subdomain.example.com" 
-proxied = true # Enable Cloudflare proxy
-record_types = "A" # IPv4 only
-ttl = 300 
+# Additional domain examples (uncomment and modify as needed)
+# Most users only need the single domain configuration above
 
-[[domains]]
-name = "ipv6.example.com" 
-proxied = false 
-record_types = "AAAA" # IPv6 only
-ttl = 300 
+# [[domains]]
+# name = "subdomain.example.com" 
+# proxied = true # Enable Cloudflare proxy
+# record_types = "A" # IPv4 only
+# ttl = 300 
+
+# [[domains]]
+# name = "ipv6.example.com" 
+# proxied = false 
+# record_types = "AAAA" # IPv6 only
+# ttl = 300 
 
 # Additional domain example with custom settings
-[[domains]]
-name = "api.example.com" 
-proxied = true 
-record_types = "both" 
-ttl = 1 # Automatic TTL
+# [[domains]]
+# name = "api.example.com" 
+# proxied = true 
+# record_types = "both" 
+# ttl = 1 # Automatic TTL

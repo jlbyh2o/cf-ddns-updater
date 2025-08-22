@@ -11,6 +11,7 @@ BINARY_NAME="cf-ddns-updater"
 INSTALL_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/cf-ddns-updater"
 SERVICE_DIR="/etc/systemd/system"
+LOG_DIR="/var/log"
 VERSION="latest"
 
 # Colors for output
@@ -160,6 +161,12 @@ create_user() {
     # Set ownership of config directory
     chown -R cf-ddns:cf-ddns "$CONFIG_DIR"
     chmod 750 "$CONFIG_DIR"
+    
+    # Create dedicated log directory for cf-ddns
+    local cf_ddns_log_dir="$LOG_DIR/cf-ddns-updater"
+    mkdir -p "$cf_ddns_log_dir"
+    chown cf-ddns:cf-ddns "$cf_ddns_log_dir"
+    chmod 755 "$cf_ddns_log_dir"
     
     log_success "User and permissions configured"
 }

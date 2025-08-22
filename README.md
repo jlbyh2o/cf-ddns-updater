@@ -1,144 +1,139 @@
 # Cloudflare DDNS Updater
 
-A reliable and configurable Dynamic DNS updater for Cloudflare written in Go. This tool automatically updates your Cloudflare DNS records with your current public IP address, supporting both IPv4 (A records) and IPv6 (AAAA records).
+🚀 **A reliable and lightweight Dynamic DNS updater for Cloudflare** - Keep your domains pointing to your dynamic IP address automatically!
 
-## Features
+[![Build Status](https://github.com/jlbyh2o/cf-ddns-updater/workflows/build/badge.svg)](https://github.com/jlbyh2o/cf-ddns-updater/actions)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jlbyh2o/cf-ddns-updater)](https://goreportcard.com/report/github.com/jlbyh2o/cf-ddns-updater)
 
-- **Reliable**: Uses multiple IP detection services for redundancy, with fetch-ip.com as the default
-- **Configurable**: Support for A records, AAAA records, or both
-- **Cross-platform**: Builds for Linux (x86-64, ARM, ARM64) and Windows (x86-64, ARM64)
-- **Flexible Authentication**: Supports both API tokens and API key/email combinations
-- **Continuous Mode**: Can run continuously with configurable intervals
-- **Comprehensive Logging**: Detailed logging with optional file output
-- **Error Handling**: Robust error handling and recovery
+## ⚡ Quick Install (Linux)
 
-## Quick Start
+**Install with one command:**
+```bash
+curl -sSL https://raw.githubusercontent.com/jlbyh2o/cf-ddns-updater/main/install-linux.sh | sudo bash
+```
 
-1. **Download or Build**
-   - Download pre-built binaries from releases, or
-   - Build from source using the provided build scripts
+**Update with one command:**
+```bash
+curl -sSL https://raw.githubusercontent.com/jlbyh2o/cf-ddns-updater/main/update-linux.sh | sudo bash
+```
 
-2. **Create Configuration**
+**Uninstall with one command:**
+```bash
+curl -sSL https://raw.githubusercontent.com/jlbyh2o/cf-ddns-updater/main/uninstall-linux.sh | sudo bash
+```
+
+> 💡 **That's it!** The installer automatically:
+> - Downloads and installs the latest binary
+> - Creates a systemd service for automatic startup
+> - Sets up proper user permissions and security
+> - Creates configuration directory at `/etc/cf-ddns/`
+
+## ✨ Features
+
+- 🔄 **Automatic Updates**: Keeps your DNS records in sync with your dynamic IP
+- 🛡️ **Reliable**: Uses multiple IP detection services for redundancy
+- ⚙️ **Flexible**: Supports IPv4 (A records), IPv6 (AAAA records), or both
+- 🔐 **Secure**: API token authentication with minimal required permissions
+- 🐧 **Linux Ready**: Complete systemd integration with security hardening
+- 📊 **Logging**: Comprehensive logging with systemd journal integration
+- 🚀 **Lightweight**: Single binary with no dependencies
+
+## 🌐 IP Detection with fetch-ip.com
+
+This project uses **[fetch-ip.com](https://fetch-ip.com)** as the primary IP detection service, with additional fallback services for maximum reliability.
+
+### Why fetch-ip.com?
+
+- 🚀 **Fast & Reliable**: Optimized for speed and uptime
+- 🔒 **Privacy-Focused**: No logging, no tracking, no data collection
+- 🌍 **Global Infrastructure**: Multiple endpoints for worldwide accessibility
+- ⚡ **Lightweight**: Minimal response overhead for quick detection
+- 🛡️ **Redundant**: Multiple fallback services ensure continuous operation
+
+### IP Detection Flow
+
+1. **Primary**: `https://v4.fetch-ip.com` (IPv4) / `https://v6.fetch-ip.com` (IPv6)
+2. **Fallback Services**: icanhazip.com, ipify.org, ident.me
+3. **Validation**: Each detected IP is validated before use
+4. **Error Handling**: Automatic failover if any service is unavailable
+
+> 💡 **Note**: fetch-ip.com is maintained by the same team behind this DDNS updater, ensuring optimal compatibility and performance.
+> 
+> 📖 **Learn more**: Check out the [fetch-ip.com documentation](https://fetch-ip.com/docs) for detailed API information and usage examples.
+
+## 🚀 Getting Started
+
+### 1. Install (Choose Your Method)
+
+#### Option A: One-Line Install (Recommended)
+```bash
+curl -sSL https://raw.githubusercontent.com/jlbyh2o/cf-ddns-updater/main/install-linux.sh | sudo bash
+```
+
+#### Option B: Manual Installation
+1. Download the latest release from [GitHub Releases](https://github.com/jlbyh2o/cf-ddns-updater/releases)
+2. Extract and run the binary manually
+
+### 2. Configure Your Cloudflare API
+
+1. Get your Cloudflare API token:
+   - Go to [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+   - Create a custom token with permissions: `Zone:DNS:Edit`, `Zone:Zone:Read`
+
+2. Edit the configuration:
    ```bash
-   cp cf-ddns.conf.example cf-ddns.conf
+   sudo nano /etc/cf-ddns/cf-ddns.conf
    ```
 
-3. **Edit Configuration**
-   - Add your Cloudflare API credentials
-   - Configure your domains and record types
-
-4. **Run**
-   ```bash
-   # Run once (Linux x86-64)
-   ./cf-ddns-updater-linux-amd64 -config cf-ddns.conf
+3. Add your configuration:
+   ```toml
+   [cloudflare]
+   api_token = "your_cloudflare_api_token_here"
    
-   # Run once (Linux ARM)
-   ./cf-ddns-updater-linux-arm -config cf-ddns.conf
-   
-   # Run once (Linux ARM64)
-   ./cf-ddns-updater-linux-arm64 -config cf-ddns.conf
-   
-   # Run continuously (Windows)
-   cf-ddns-updater-windows-amd64.exe -config cf-ddns.conf
+   [[domains]]
+   name = "example.com"
+   record_types = "both"  # "A", "AAAA", or "both"
+   ttl = 300
+   proxied = false
    ```
 
-## Configuration
+### 3. Start the Service
+
+```bash
+# Enable and start the service
+sudo systemctl enable cf-ddns-updater
+sudo systemctl start cf-ddns-updater
+
+# Check status
+sudo systemctl status cf-ddns-updater
+
+# View logs
+sudo journalctl -u cf-ddns-updater -f
+```
+
+## 📋 Configuration Reference
+
+### Configuration File Location
+After installation, edit: `/etc/cf-ddns/cf-ddns.conf`
 
 ### Basic Configuration
-
-Create a `cf-ddns.conf` file based on the example:
-
 ```toml
 [cloudflare]
 api_token = "your_cloudflare_api_token_here"
 
 [[domains]]
 name = "example.com"
-record_types = "both"
+record_types = "both"  # "A", "AAAA", or "both"
 ttl = 300
 proxied = false
-```
 
-### Configuration Options
-
-#### Cloudflare Section
-
-- `api_token` (string): Cloudflare API token (recommended)
-- `api_key` (string): Cloudflare API key (legacy, requires email)
-- `email` (string): Cloudflare account email (required with api_key)
-- `zone_id` (string, optional): Zone ID (auto-detected if not provided)
-
-#### Domain Configuration
-
-- `name` (string): Domain or subdomain name
-- `record_types` (string): "A", "AAAA", or "both" (default: "both")
-- `ttl` (int): DNS record TTL in seconds (default: 300)
-- `proxied` (bool): Whether to proxy through Cloudflare (default: false)
-
-#### Global Options
-
-- `interval` (int): Update interval in seconds (0 = run once, default: 0)
-- `verbose` (bool): Enable verbose logging (default: false)
-
-### Authentication Methods
-
-#### API Token (Recommended)
-
-1. Go to [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens)
-2. Create a custom token with:
-   - **Permissions**: `Zone:DNS:Edit`, `Zone:Zone:Read`
-   - **Zone Resources**: Include specific zones or all zones
-3. Use the token in your config:
-
-```toml
-[cloudflare]
-api_token = "your_token_here"
-```
-
-#### API Key + Email (Legacy)
-
-```toml
-[cloudflare]
-api_key = "your_global_api_key"
-email = "your@email.com"
-```
-
-## Command Line Options
-
-```bash
-./cf-ddns-updater [options]
-
-Options:
-  -config string
-        Path to configuration file (default "cf-ddns.conf")
-  -verbose
-        Enable verbose logging
-  -log string
-        Log file path (optional, logs to stdout if not specified)
-  -once
-        Run once and exit (ignore interval setting)
-```
-
-## Usage Examples
-
-### Run Once
-```bash
-./cf-ddns-updater -config cf-ddns.conf -once
-```
-
-### Continuous Mode
-```bash
-# Update every 5 minutes (300 seconds)
-./cf-ddns-updater -config cf-ddns.conf
-```
-
-### With Logging
-```bash
-./cf-ddns-updater -config cf-ddns.conf -verbose -log /var/log/ddns.log
+# Optional: Run continuously (in seconds)
+interval = 300  # Update every 5 minutes
+verbose = true  # Enable detailed logging
 ```
 
 ### Multiple Domains Example
-
 ```toml
 [cloudflare]
 api_token = "your_token_here"
@@ -165,212 +160,144 @@ interval = 300
 verbose = true
 ```
 
-## Building from Source
+### Configuration Options
 
-### Prerequisites
+| Option | Description | Default |
+|--------|-------------|----------|
+| `api_token` | Cloudflare API token (recommended) | Required |
+| `api_key` + `email` | Legacy authentication method | Alternative |
+| `name` | Domain or subdomain name | Required |
+| `record_types` | "A", "AAAA", or "both" | "both" |
+| `ttl` | DNS record TTL in seconds | 300 |
+| `proxied` | Proxy through Cloudflare | false |
+| `interval` | Update interval in seconds (0 = run once) | 0 |
+| `verbose` | Enable verbose logging | false |
 
-- Go 1.19 or later
-- Git
+## 🔧 Management Commands
 
-### Build Instructions
+### Service Management
+```bash
+# Check service status
+sudo systemctl status cf-ddns-updater
 
-#### Windows
-```cmd
-git clone https://github.com/jlbyh2o/cf-ddns-updater.git
-cd cf-ddns-updater
-build.bat
+# View live logs
+sudo journalctl -u cf-ddns-updater -f
+
+# Restart service
+sudo systemctl restart cf-ddns-updater
+
+# Stop service
+sudo systemctl stop cf-ddns-updater
+
+# Disable service
+sudo systemctl disable cf-ddns-updater
 ```
 
-#### Linux/macOS
+### Manual Execution
+```bash
+# Run once manually
+cf-ddns-updater -config /etc/cf-ddns/cf-ddns.conf -once -verbose
+
+# Test configuration
+cf-ddns-updater -config /etc/cf-ddns/cf-ddns.conf -once
+```
+
+### Command Line Options
+| Option | Description |
+|--------|-------------|
+| `-config` | Path to configuration file |
+| `-verbose` | Enable verbose logging |
+| `-log` | Log file path (optional) |
+| `-once` | Run once and exit |
+
+## 🛠️ Building from Source
+
+### Quick Build
 ```bash
 git clone https://github.com/jlbyh2o/cf-ddns-updater.git
 cd cf-ddns-updater
-chmod +x build.sh
+
+# Linux/macOS
 ./build.sh
+
+# Windows
+build.bat
+
+# Or use Make (Linux)
+make build-all
 ```
 
-Built binaries will be available in the `bin/` directory:
-- `cf-ddns-updater-windows-amd64.exe` (Windows x86-64)
-- `cf-ddns-updater-windows-arm64.exe` (Windows ARM64)
-- `cf-ddns-updater-linux-amd64` (Linux x86-64)
-- `cf-ddns-updater-linux-arm` (Linux ARM)
-- `cf-ddns-updater-linux-arm64` (Linux ARM64)
+**Prerequisites:** Go 1.19+, Git
 
-## Linux Installation
+**Output:** Binaries in `bin/` directory for all supported platforms
 
-For Linux systems, we provide a complete installation package that integrates with systemd and follows Linux filesystem standards.
-
-### System Installation (Recommended)
-
-The system installation places the binary in `/usr/local/bin`, configuration in `/etc/cf-ddns`, and sets up a systemd service.
-
-#### Prerequisites
-
-- Linux system with systemd
-- Root access (sudo)
-- Go 1.19+ (for building from source)
-
-#### Installation Steps
-
-1. **Clone and Build**
-   ```bash
-   git clone https://github.com/jlbyh2o/cf-ddns-updater.git
-   cd cf-ddns-updater
-   make build
-   ```
-
-2. **Install System-wide**
-   ```bash
-   sudo make install
-   ```
-   
-   Or use the installation script:
-   ```bash
-   chmod +x install.sh
-   sudo ./install.sh
-   ```
-
-3. **Configure**
-   ```bash
-   # Copy example configuration
-   sudo cp /etc/cf-ddns/cf-ddns.conf.example /etc/cf-ddns/cf-ddns.conf
-   
-   # Edit configuration
-   sudo nano /etc/cf-ddns/cf-ddns.conf
-   ```
-
-4. **Enable and Start Service**
-   ```bash
-   sudo systemctl enable cf-ddns-updater
-   sudo systemctl start cf-ddns-updater
-   ```
-
-5. **Check Status**
-   ```bash
-   sudo systemctl status cf-ddns-updater
-   sudo journalctl -u cf-ddns-updater -f
-   ```
-
-#### Installation Paths
-
-- **Binary**: `/usr/local/bin/cf-ddns-updater`
-- **Configuration**: `/etc/cf-ddns/cf-ddns.conf`
-- **Service**: `/etc/systemd/system/cf-ddns-updater.service`
-- **User**: `cf-ddns` (created automatically)
-- **Logs**: Available via `journalctl -u cf-ddns-updater`
-
-#### Configuration File Locations
-
-The application searches for configuration files in this order:
-
-1. `/etc/cf-ddns/cf-ddns.conf` (system-wide)
-2. `./cf-ddns.conf` (current directory)
-3. `cf-ddns.conf` relative to executable
-
-You can override this with the `-config` flag:
-```bash
-cf-ddns-updater -config /path/to/your/cf-ddns.conf
-#### Makefile Targets
-
-```bash
-make build      # Build the binary for Linux x86-64
-make build-all  # Build for all supported architectures
-make install    # Install system-wide with systemd service
-make install-dev# Install without systemd service
-make uninstall  # Remove installation
-make clean      # Clean build artifacts
-make help       # Show available targets
-```
-
-#### Uninstallation
-
-```bash
-sudo make uninstall
-```
-
-Or using the installation script:
-```bash
-sudo ./install.sh uninstall
-```
-
-### Manual Installation
-
-If you prefer manual installation:
-
-1. **Build and copy binary**
-   ```bash
-   make build
-   sudo cp cf-ddns-updater /usr/local/bin/
-   sudo chmod +x /usr/local/bin/cf-ddns-updater
-   ```
-
-2. **Create configuration directory**
-   ```bash
-   sudo mkdir -p /etc/cf-ddns
-   sudo cp cf-ddns.conf.example /etc/cf-ddns/
-   ```
-
-3. **Create systemd service** (optional)
-   ```bash
-   sudo cp cf-ddns-updater.service /etc/systemd/system/
-   sudo systemctl daemon-reload
-   ```
-
-### Security Features
+## 🔒 Security Features
 
 The systemd service includes comprehensive security hardening:
+- ✅ Dedicated `cf-ddns` user with minimal privileges
+- ✅ Private temporary directories
+- ✅ Protected system directories
+- ✅ Restricted system calls
+- ✅ Network access limited to IPv4/IPv6 only
+- ✅ Memory execution protection
+- ✅ No new privileges allowed
 
-- Runs as dedicated `cf-ddns` user
-- No new privileges
-- Private temporary directory
-- Protected system directories
-- Restricted system calls
-- Network access limited to IPv4/IPv6
-- Memory execution protection
+## 📁 Installation Paths
 
-## Deployment
+| Component | Path |
+|-----------|------|
+| Binary | `/usr/local/bin/cf-ddns-updater` |
+| Configuration | `/etc/cf-ddns/cf-ddns.conf` |
+| Service File | `/etc/systemd/system/cf-ddns-updater.service` |
+| Logs | `/var/log/cf-ddns-updater/` |
+| System User | `cf-ddns` (auto-created) |
 
-### Linux Service (systemd)
+## 🐛 Troubleshooting
 
-Create `/etc/systemd/system/cf-ddns-updater.service`:
-
-```ini
-[Unit]
-Description=Cloudflare DDNS Updater
-After=network.target
-
-[Service]
-Type=simple
-User=ddns
-WorkingDirectory=/opt/cf-ddns-updater
-ExecStart=/opt/cf-ddns-updater/cf-ddns-updater-linux-amd64 -config /opt/cf-ddns-updater/cf-ddns.conf
-Restart=always
-RestartSec=30
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Enable and start:
+### Quick Diagnostics
 ```bash
-sudo systemctl enable cf-ddns-updater
-sudo systemctl start cf-ddns-updater
+# Check service status
+sudo systemctl status cf-ddns-updater
+
+# View recent logs
+sudo journalctl -u cf-ddns-updater --since "1 hour ago"
+
+# Test configuration manually
+cf-ddns-updater -config /etc/cf-ddns/cf-ddns.conf -verbose -once
 ```
 
-### Windows Service
+### Common Issues
 
-Use a tool like [NSSM](https://nssm.cc/) to run as a Windows service:
+| Issue | Solution |
+|-------|----------|
+| **Authentication Errors** | Verify API token permissions: `Zone:DNS:Edit`, `Zone:Zone:Read` |
+| **IP Detection Failures** | Check internet connectivity; tool uses multiple services for redundancy |
+| **DNS Update Failures** | Verify domain ownership in Cloudflare and exact record name match |
+| **Service Won't Start** | Check configuration file syntax and permissions |
 
-```cmd
-nssm install "Cloudflare DDNS Updater" "C:\path\to\cf-ddns-updater-windows-amd64.exe"
-nssm set "Cloudflare DDNS Updater" Arguments "-config C:\path\to\cf-ddns.conf"
-nssm start "Cloudflare DDNS Updater"
+### Debug Commands
+```bash
+# Test with verbose output
+cf-ddns-updater -config /etc/cf-ddns/cf-ddns.conf -verbose -once
+
+# Check configuration file
+sudo cat /etc/cf-ddns/cf-ddns.conf
+
+# Verify service file
+sudo systemctl cat cf-ddns-updater
 ```
+
+## 🔐 Security Best Practices
+
+- ✅ Use API tokens (not global API keys)
+- ✅ Limit token permissions to minimum required
+- ✅ Secure configuration file permissions: `sudo chmod 600 /etc/cf-ddns/cf-ddns.conf`
+- ✅ Regularly rotate API credentials
+- ✅ Monitor logs for suspicious activity
+
+## 🐳 Alternative Deployments
 
 ### Docker
-
-Create a `Dockerfile`:
-
 ```dockerfile
 FROM scratch
 COPY cf-ddns-updater-linux-amd64 /cf-ddns-updater
@@ -378,69 +305,42 @@ COPY cf-ddns.conf /cf-ddns.conf
 ENTRYPOINT ["/cf-ddns-updater", "-config", "/cf-ddns.conf"]
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Authentication Errors**
-   - Verify your API token has the correct permissions
-   - Check that the token isn't expired
-   - Ensure zone access is granted
-
-2. **IP Detection Failures**
-   - Check internet connectivity
-   - Verify firewall settings
-   - The tool tries multiple services for redundancy (fetch-ip.com, icanhazip.com, ipify.org, ident.me)
-
-3. **DNS Update Failures**
-   - Verify domain ownership in Cloudflare
-   - Check zone ID (if manually specified)
-   - Ensure record name matches exactly
-
-### Debug Mode
-
-Run with verbose logging to see detailed information:
-
-```bash
-./cf-ddns-updater -config cf-ddns.conf -verbose -once
+### Windows Service
+Use [NSSM](https://nssm.cc/) for Windows service installation:
+```cmd
+nssm install "Cloudflare DDNS Updater" "C:\path\to\cf-ddns-updater.exe"
+nssm set "Cloudflare DDNS Updater" Arguments "-config C:\path\to\cf-ddns.conf"
 ```
 
-## Security Considerations
+## 🤝 Contributing
 
-- Store configuration files securely with appropriate permissions
-- Use API tokens instead of global API keys when possible
-- Limit API token permissions to only what's needed
-- Consider using environment variables for sensitive data
-- Regularly rotate API credentials
+We welcome contributions! Here's how you can help:
 
-## Contributing
+- 🐛 **Report bugs** - Open an issue with detailed information
+- 💡 **Suggest features** - Share your ideas for improvements
+- 🔧 **Submit PRs** - Fix bugs or add new features
+- 📖 **Improve docs** - Help make the documentation better
 
-Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+## 📄 License
 
-## License
+This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
 
-This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
+See the [LICENSE](LICENSE) file for full details.
 
-Cloudflare Dynamic DNS Updater
-Copyright (C) 2025
+## 🆘 Support
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+**Need help?** Here's how to get support:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+1. 📖 Check the [troubleshooting section](#-troubleshooting) above
+2. 🔍 Search [existing issues](https://github.com/jlbyh2o/cf-ddns-updater/issues)
+3. 🆕 [Open a new issue](https://github.com/jlbyh2o/cf-ddns-updater/issues/new) with:
+   - Your configuration (remove sensitive data)
+   - Log output with `-verbose` flag
+   - System information (OS, architecture)
+   - Steps to reproduce the issue
 
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
+---
 
-## Support
+⭐ **Found this helpful?** Give us a star on GitHub!
 
-If you encounter issues or need help:
-
-1. Check the troubleshooting section
-2. Review the logs with verbose mode enabled
-3. Open an issue with detailed information about your setup and the problem
+🔄 **Keep your DNS records in sync automatically with Cloudflare DDNS Updater!**

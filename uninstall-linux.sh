@@ -9,6 +9,7 @@ set -e
 BINARY_NAME="cf-ddns-updater"
 INSTALL_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/cf-ddns-updater"
+LOG_DIR="/var/log"
 SERVICE_DIR="/etc/systemd/system"
 SERVICE_NAME="cf-ddns-updater.service"
 USER_NAME="cf-ddns"
@@ -131,7 +132,20 @@ remove_user() {
 clean_logs() {
     log_info "Cleaning up systemd journal logs for $SERVICE_NAME"
     journalctl --vacuum-time=1s --unit="$SERVICE_NAME" >/dev/null 2>&1 || true
-    log_success "Log cleanup completed"
+    log_success "Systemd journal logs cleaned"
+}
+
+# Remove log directory and contents
+remove_log_directory() {
+    local cf_ddns_log_dir="$LOG_DIR/cf-ddns-updater"
+    
+    if [[ -d "$cf_ddns_log_dir" ]]; then
+        log_info "Removing log directory: $cf_ddns_log_dir"
+        rm -rf "$cf_ddns_log_dir"
+        log_success "Log directory removed"
+    else
+        log_info "Log directory does not exist, skipping"
+    fi
 }
 
 # Main uninstall function
@@ -159,6 +173,9 @@ main() {
     # Clean up logs
     clean_logs
     
+    # Remove log directory
+    remove_log_directory
+    
     # Final success message
     log_success "Cloudflare DDNS Updater uninstalled successfully!"
     echo
@@ -166,6 +183,8 @@ main() {
     echo "  - Binary: ${INSTALL_DIR}/${BINARY_NAME}"
     echo "  - Service: ${SERVICE_DIR}/${SERVICE_NAME}"
     echo "  - User: $USER_NAME"
+    echo "  - Configuration: $CONFIG_DIR"
+    echo "  - Log directory: ${LOG_DIR}/cf-ddns-updater"
     echo "  - Logs: systemd journal entries"
     echo
     if [[ -d "$CONFIG_DIR" ]]; then

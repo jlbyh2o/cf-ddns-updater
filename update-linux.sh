@@ -10,7 +10,9 @@ REPO="jlbyh2o/cf-ddns-updater"
 BINARY_NAME="cf-ddns-updater"
 INSTALL_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/cf-ddns-updater"
+LOG_DIR="/var/log"
 SERVICE_NAME="cf-ddns-updater.service"
+SERVICE_DIR="/etc/systemd/system"
 BACKUP_DIR="/tmp/cf-ddns-backup-$(date +%Y%m%d-%H%M%S)"
 
 # Colors for output
@@ -225,6 +227,68 @@ ensure_user_exists() {
     fi
 }
 
+# Ensure log directory exists with proper permissions
+ensure_log_directory() {
+    local cf_ddns_log_dir="$LOG_DIR/cf-ddns-updater"
+    
+    if [[ ! -d "$cf_ddns_log_dir" ]]; then
+        log_info "Creating log directory: $cf_ddns_log_dir"
+        mkdir -p "$cf_ddns_log_dir"
+        chown cf-ddns:cf-ddns "$cf_ddns_log_dir"
+        chmod 755 "$cf_ddns_log_dir"
+        log_success "Log directory created with proper permissions"
+    else
+        # Ensure proper ownership and permissions for existing directory
+        chown cf-ddns:cf-ddns "$cf_ddns_log_dir"
+        chmod 755 "$cf_ddns_log_dir"
+        log_info "Log directory permissions updated"
+    fi
+}
+
+# Update systemd service file
+update_service() {
+    log_info "Updating systemd service file"
+    
+    local service_url="https://raw.githubusercontent.com/${REPO}/main/cf-ddns-updater.service"
+    local temp_service="/tmp/cf-ddns-updater.service"
+    local service_path="${SERVICE_DIR}/${SERVICE_NAME}"
+    
+    # Download updated service file
+    if command -v curl >/dev/null 2>&1; then
+        if curl -L -o "$temp_service" "$service_url" 2>/dev/null; then
+            log_info "Downloaded updated service file"
+        else
+            log_warning "Could not download updated service file, keeping existing one"
+            return 0
+        fi
+    elif command -v wget >/dev/null 2>&1; then
+        if wget -O "$temp_service" "$service_url" 2>/dev/null; then
+            log_info "Downloaded updated service file"
+        else
+            log_warning "Could not download updated service file, keeping existing one"
+            return 0
+        fi
+    else
+        log_warning "Neither curl nor wget available, keeping existing service file"
+        return 0
+    fi
+    
+    # Backup existing service file if it exists
+    if [[ -f "$service_path" ]]; then
+        cp "$service_path" "$BACKUP_DIR/" 2>/dev/null || true
+        log_info "Existing service file backed up"
+    fi
+    
+    # Install updated service file
+    cp "$temp_service" "$service_path"
+    rm -f "$temp_service"
+    
+    # Reload systemd daemon
+    systemctl daemon-reload
+    
+    log_success "Service file updated and systemd reloaded"
+}
+
 # Check for configuration migration needs
 check_config_migration() {
     local old_json_config="${CONFIG_DIR}/config.json"
@@ -259,6 +323,13 @@ rollback() {
         if [[ -f "$BACKUP_DIR/$BINARY_NAME" ]]; then
             cp "$BACKUP_DIR/$BINARY_NAME" "${INSTALL_DIR}/"
             log_info "Binary restored from backup"
+        fi
+        
+        # Restore service file
+        if [[ -f "$BACKUP_DIR/$SERVICE_NAME" ]]; then
+            cp "$BACKUP_DIR/$SERVICE_NAME" "${SERVICE_DIR}/"
+            systemctl daemon-reload
+            log_info "Service file restored from backup"
         fi
         
         # Start service
@@ -321,6 +392,12 @@ main() {
     
     # Ensure cf-ddns user exists (for older installations)
     ensure_user_exists
+    
+    # Ensure log directory exists with proper permissions
+    ensure_log_directory
+    
+    # Update systemd service file
+    update_service
     
     # Check for configuration migration needs
     if ! check_config_migration; then
