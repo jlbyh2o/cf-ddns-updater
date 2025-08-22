@@ -2,7 +2,7 @@
 
 # Variables
 APP_NAME = cf-ddns-updater
-VERSION = 0.2.0
+VERSION = 0.3.0
 BINARY = $(APP_NAME)
 SOURCES = *.go
 
