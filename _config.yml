@@ -1,0 +1,92 @@
+# Site settings
+title: "Cloudflare DDNS Updater"
+description: "A reliable and lightweight Dynamic DNS updater for Cloudflare - Keep your domains pointing to your dynamic IP address automatically!"
+url: "https://jlbyh2o.github.io"
+baseurl: "/cf-ddns-updater"
+version: "1.0.0"
+
+# Repository info
+repository: "jlbyh2o/cf-ddns-updater"
+github_username: jlbyh2o
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# GitHub Pages settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - getting-started.md
+  - installation.md
+  - configuration.md
+  - troubleshooting.md
+  - security.md
+  - api.md
+
+# Social links
+github_username: jlbyh2o
+
+# SEO
+author: jlbyh2o
+twitter:
+  username: # Add if available
+  card: summary
+
+# Google Analytics (optional)
+# google_analytics: # Add if available
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - go.mod
+  - go.sum
+  - "*.go"
+  - build.sh
+  - build.bat
+  - Makefile
+  - .gitignore
+  - .github/
+  - bin/
+  - "*.exe"
+
+# Collections
+collections:
+  guides:
+    output: true
+    permalink: /:collection/:name/
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "guides"
+    values:
+      layout: "guide"
+
+# Kramdown settings
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
