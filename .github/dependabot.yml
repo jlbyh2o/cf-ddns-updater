@@ -1,0 +1,75 @@
+# Dependabot configuration file
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Go modules dependency updates
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "jlbyh2o"
+    assignees:
+      - "jlbyh2o"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "go"
+    milestone: 1
+    pull-request-branch-name:
+      separator: "/"
+    rebase-strategy: "auto"
+
+  # GitHub Actions workflow dependency updates
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:30"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "jlbyh2o"
+    assignees:
+      - "jlbyh2o"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci"
+    pull-request-branch-name:
+      separator: "/"
+    rebase-strategy: "auto"
+
+  # Docker dependency updates (if any Dockerfiles are added later)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "jlbyh2o"
+    assignees:
+      - "jlbyh2o"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    pull-request-branch-name:
+      separator: "/"
+    rebase-strategy: "auto"
