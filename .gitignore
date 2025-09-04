@@ -219,3 +219,6 @@ fabric.properties
 
 # OpenAPI
 openapi/
+
+# Claude
+.claude
