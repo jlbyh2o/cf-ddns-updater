@@ -2,6 +2,7 @@
 
 🚀 **A reliable and lightweight Dynamic DNS updater for Cloudflare** - Keep your domains pointing to your dynamic IP address automatically!
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D51K3UOB)
 [![Build Status](https://github.com/jlbyh2o/cf-ddns-updater/actions/workflows/build.yml/badge.svg)](https://github.com/jlbyh2o/cf-ddns-updater/actions)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/jlbyh2o/cf-ddns-updater)](https://github.com/jlbyh2o/cf-ddns-updater/blob/main/go.mod)
 [![Release](https://img.shields.io/github/v/release/jlbyh2o/cf-ddns-updater)](https://github.com/jlbyh2o/cf-ddns-updater/releases)
@@ -341,6 +342,19 @@ See the [LICENSE](LICENSE) file for full details.
    - Log output with `-verbose` flag
    - System information (OS, architecture)
    - Steps to reproduce the issue
+
+## ☕ Support Development
+
+This project is developed and maintained in my free time. If Cloudflare DDNS Updater has helped you or saved you time, consider supporting continued development:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D51K3UOB)
+
+**Your support helps with:**
+- 🚀 **New Features** - Adding requested functionality and improvements
+- 🔧 **Bug Fixes** - Faster response to issues and maintenance  
+- 📖 **Documentation** - Keeping guides comprehensive and up-to-date
+- 🛡️ **Security** - Regular security reviews and updates
+- 🌍 **Infrastructure** - Testing across different platforms and environments
 
 ---
 
