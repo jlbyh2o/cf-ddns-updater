@@ -2,9 +2,12 @@
 
 🚀 **A reliable and lightweight Dynamic DNS updater for Cloudflare** - Keep your domains pointing to your dynamic IP address automatically!
 
-[![Build Status](https://github.com/jlbyh2o/cf-ddns-updater/workflows/build/badge.svg)](https://github.com/jlbyh2o/cf-ddns-updater/actions)
+[![Build Status](https://github.com/jlbyh2o/cf-ddns-updater/actions/workflows/build.yml/badge.svg)](https://github.com/jlbyh2o/cf-ddns-updater/actions)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/jlbyh2o/cf-ddns-updater)](https://github.com/jlbyh2o/cf-ddns-updater/blob/main/go.mod)
+[![Release](https://img.shields.io/github/v/release/jlbyh2o/cf-ddns-updater)](https://github.com/jlbyh2o/cf-ddns-updater/releases)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jlbyh2o/cf-ddns-updater)](https://goreportcard.com/report/github.com/jlbyh2o/cf-ddns-updater)
+[![Downloads](https://img.shields.io/github/downloads/jlbyh2o/cf-ddns-updater/total)](https://github.com/jlbyh2o/cf-ddns-updater/releases)
 
 ## ⚡ Quick Install (Linux)
 
