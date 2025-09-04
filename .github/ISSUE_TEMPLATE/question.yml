@@ -99,7 +99,7 @@ body:
     attributes:
       label: Application Version
       description: What version of cf-ddns-updater are you using? (if applicable)
-      placeholder: "v0.1.0 or 'latest' or 'not installed yet'"
+      placeholder: "v1.0.0 or 'latest' or 'not installed yet'"
     validations:
       required: false
 

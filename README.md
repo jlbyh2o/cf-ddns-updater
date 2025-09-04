@@ -230,7 +230,7 @@ build.bat
 make build-all
 ```
 
-**Prerequisites:** Go 1.19+, Git
+**Prerequisites:** Go 1.23+, Git
 
 **Output:** Binaries in `bin/` directory for all supported platforms
 

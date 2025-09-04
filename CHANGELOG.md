@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2025-09-04
+
+### Added
+- **Stable Release**: First stable release of Cloudflare DDNS Updater
+- Dependabot configuration for automated dependency updates
+- Comprehensive GitHub labels for better issue and PR management
+- Enhanced project badges (Go version, releases, downloads)
+
+### Changed
+- **Code Quality**: Refactored complex functions to reduce cyclomatic complexity
+- **Maintainability**: Split large functions into focused, single-responsibility functions
+- **Documentation**: Updated README with improved badges and fixed GitHub Actions badge
+- **Go Version**: Updated Go requirement from 1.19+ to 1.23+ for better compatibility
+- **GitHub Actions**: Updated setup-go from v5 to v6 with Go 1.23
+
+### Fixed
+- GitHub Actions build badge URL now correctly points to workflow file
+- Go version compatibility issues between go.mod and GitHub Actions
+- Security documentation updated to reflect 1.0.x supported versions
+- Issue templates updated with current version placeholders
+
+### Security
+- Updated SECURITY.md to reflect supported versions (1.0.x and above)
+- Enhanced security documentation with comprehensive threat model
+
 ## [0.3.0] - 2025-01-27
 
 ### Added
@@ -48,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Command-line interface
 - Configuration file support
 
-[Unreleased]: https://github.com/jlbyh2o/cf-ddns-updater/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/jlbyh2o/cf-ddns-updater/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/jlbyh2o/cf-ddns-updater/compare/v0.3.0...v1.0.0
 [0.3.0]: https://github.com/jlbyh2o/cf-ddns-updater/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/jlbyh2o/cf-ddns-updater/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/jlbyh2o/cf-ddns-updater/releases/tag/v0.1.0
