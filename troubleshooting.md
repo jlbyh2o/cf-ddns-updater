@@ -716,4 +716,18 @@ curl -X PUT "https://api.cloudflare.com/client/v4/zones/ZONE_ID/dns_records/RECO
 
 ---
 
+## ☕ Found This Troubleshooting Guide Helpful?
+
+If this guide helped you solve your issue, consider supporting the project:
+
+<div style="text-align: center; margin: 1.5rem 0;">
+  <a href='https://ko-fi.com/D1D51K3UOB' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+</div>
+
+Your support helps me maintain comprehensive documentation and provide better community support! 🛠️
+
+---
+
 Remember: Most issues are configuration-related. Always test with `-verbose -once` flags first!

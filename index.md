@@ -112,12 +112,30 @@ curl -sSL https://raw.githubusercontent.com/jlbyh2o/cf-ddns-updater/main/install
 - **🐛 Issue Tracker**: [Report bugs and request features](https://github.com/jlbyh2o/cf-ddns-updater/issues)
 - **💬 Discussions**: [Community Q&A and help](https://github.com/jlbyh2o/cf-ddns-updater/discussions)
 - **🔒 Security**: [Report security issues responsibly](security.html)
+- **☕ Support Development**: [Buy me a coffee](https://ko-fi.com/D1D51K3UOB) to support continued development
 
 ## ⭐ Star Us on GitHub
 
 If you find this project helpful, please consider giving us a star on GitHub! It helps others discover the project and motivates continued development.
 
 [⭐ Star on GitHub](https://github.com/jlbyh2o/cf-ddns-updater){:.btn .btn-primary}
+
+## ☕ Support the Project
+
+This project is developed and maintained in my free time. If Cloudflare DDNS Updater has helped you or your organization, consider supporting continued development:
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href='https://ko-fi.com/D1D51K3UOB' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+</div>
+
+**Your support helps with:**
+- 🚀 **New Features** - Adding requested functionality and improvements  
+- 🔧 **Bug Fixes** - Faster response to issues and maintenance
+- 📖 **Documentation** - Keeping guides comprehensive and up-to-date
+- 🛡️ **Security** - Regular security reviews and updates
+- 🌍 **Infrastructure** - Testing across different platforms and environments
 
 ---
 

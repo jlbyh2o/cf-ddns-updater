@@ -429,3 +429,17 @@ After successful installation:
 2. ✅ **Set up monitoring** - Monitor logs and set up alerts
 3. ✅ **Review security** - [Security Guide](/cf-ddns-updater/security/)
 4. ✅ **Test failover** - Ensure backup IP services work
+
+---
+
+## ☕ Enjoying the Easy Installation?
+
+If our installation scripts and documentation saved you time and effort, consider showing your appreciation:
+
+<div style="text-align: center; margin: 1.5rem 0;">
+  <a href='https://ko-fi.com/D1D51K3UOB' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+</div>
+
+Your support helps maintain the installation scripts and keep the documentation up-to-date! 🙏

@@ -258,3 +258,17 @@ cf-ddns-updater -config /path/to/config -verbose
 - 🔒 [Security Best Practices](/cf-ddns-updater/security/)
 - 💬 [Community Support](https://github.com/jlbyh2o/cf-ddns-updater/discussions)
 - 🐛 [Report Issues](https://github.com/jlbyh2o/cf-ddns-updater/issues)
+
+---
+
+## ☕ Support the Project
+
+If this guide helped you get your DDNS updater running smoothly, consider supporting the project:
+
+<div style="text-align: center; margin: 1.5rem 0;">
+  <a href='https://ko-fi.com/D1D51K3UOB' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+</div>
+
+Your support helps maintain and improve this project for everyone! 🚀
